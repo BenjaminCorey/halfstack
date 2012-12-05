@@ -2,6 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #= require_self
-#= require_tree ./pages/
+#= require_tree ./pages
 window.hs ||= {}
 hs.pages ||= {}
