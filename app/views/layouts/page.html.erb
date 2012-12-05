@@ -35,8 +35,13 @@
       <div class="span12 well"><%= yield %></div>
     </div>
   </div>
+  <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag params[:controller] %>
-  <%= javascript_include_tag "pages/#{@page.slug}" %>
+  <%= javascript_tag do %>
+    $(function(){
+      hs.pages.<%= @page.slug %>.init()
+    });
+  <% end %> 
 </body>
 </html>
