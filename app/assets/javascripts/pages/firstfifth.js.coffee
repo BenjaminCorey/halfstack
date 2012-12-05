@@ -1,5 +1,5 @@
 hs = window.hs
-hs.pages.about = {
+hs.pages.firstfifth = {
   init: () ->
     console.log "init"
     height = 300
