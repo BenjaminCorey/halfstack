@@ -37,12 +37,10 @@
   </div>
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "application" %>
-  <% if @page do %>
-    <%= javascript_tag do %>
-      $(function(){
-        hs.pages.<%= @page.slug %>.init()
-      });
-    <% end %> 
-  <% end %>
+  <%= javascript_tag do %>
+    $(function(){
+      hs.pages.<%= @page.slug %>.init()
+    });
+  <% end %> 
 </body>
 </html>
