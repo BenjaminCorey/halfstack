@@ -58,5 +58,8 @@ module Halfstack
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    # Don't start the rails app during asset precompilation
+    config.assets.initialize_on_precompile = false
   end
 end
