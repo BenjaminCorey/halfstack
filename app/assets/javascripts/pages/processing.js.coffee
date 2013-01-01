@@ -43,8 +43,8 @@ draw = (p5 = {}) ->
 
     bean.draw() for bean in @beans
 
-    if p5.frameCount % 20 == 0
-      @beans.splice(parseInt(Math.random() * @beans.length), 1)
+    # if p5.frameCount % 20 == 0
+    #   @beans.splice(parseInt(Math.random() * @beans.length), 1)
 
 class Bean
   constructor: (@p5, options) ->
