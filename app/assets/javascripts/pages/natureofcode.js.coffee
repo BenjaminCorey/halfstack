@@ -25,17 +25,19 @@ initialize = (p = {}) ->
   
   p.setup = ->
     p.size $canvas.width(), $canvas.height()
-    p.background 255
+    p.background 0
 
-    for y in [1..20]
+    for y in [1..30]
       for x in [1..50]
-        movers.push new Mover(p, {x: (p.width / 50) * x, y: (p.height / 20) * y})
+        origin_y = (p.height / 30) * y
+        origin_x = (p.width / 50) * x
+        movers.push new Mover(p, {x: origin_x, y: origin_y})
 
   p.draw  = ->
     p.colorMode p.RGB, 255, 255, 255, 100
-    p.fill 0,0,0,50
+    p.fill 0, 0, 0, 5
     p.stroke 0,0,0,0
-    p.rect 0,0,p.width, p.height
+    p.rect 0, 0, p.width, p.height
     #p.background 255
     #if p.frameCount % 5 == 0
     #  movers.push new Mover(p)
@@ -51,18 +53,22 @@ initialize = (p = {}) ->
 class Mover
 
   constructor: (@p, options) ->
-    @location = new @p.PVector options.x, options.y
+    @origin = new @p.PVector options.x, options.y
     @velocity = new @p.PVector 0,0
     @forces = []
-    @origin = new @p.PVector @location.x, @location.y
+    offsetx = @p.width / 2
+    offsety = @p.height / 2
+    #x = if (options.x >= offsetx) then offsetx else offsetx * -1
+    #y = if (options.y >= offsety) then offsety else offsety * -1
+    @location = new @p.PVector options.x, options.y
 
   update: ->
     mouse = new p.PVector(p.mouseX, p.mouseY)
     @forces.gravity = p.PVector.sub @origin, @location
-    @forces.gravity.mult .0001
+    @forces.gravity.mult .001
     @forces.direction = p.PVector.sub mouse, @location
     @forces.direction.normalize()
-    @forces.direction.mult .00001 * (@p.frameCount % 1000)
+    @forces.direction.mult .001 * ((@p.frameCount % 1000) - 250)
     accelleration = new p.PVector(0,0)
 
     for name, force of @forces
@@ -70,14 +76,16 @@ class Mover
 
     @velocity.add accelleration
     @velocity.limit(5)
+
     @location.add @velocity
-    @color = 90 + ((@velocity.mag() * 10) % 360) 
+
+    @color = (@velocity.mag() * 10) % 360
 
   display: ->
     @p.colorMode @p.HSB, 360, 100, 100, 100
-    @p.stroke @color, 100, 50, 100 
-    @p.fill   @color, 100, 100, 100
-    radius = @velocity.mag()
+    @p.stroke(@color, 100, 50, 100)
+    @p.fill(@color, 100, 50, 100)
+    radius = @velocity.mag() * 2
     @p.ellipse @location.x, @location.y, radius, radius
 
   checkEdges: ->

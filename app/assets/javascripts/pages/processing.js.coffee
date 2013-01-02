@@ -10,22 +10,22 @@ setupCanvas = ->
   $canvas = $('#processing')
   $canvas.css({
     width: '100%'
-    height: 700
+    height: 1200
   })
 
 draw = (p5 = {}) ->
   p5.setup = () ->
     width = $('#processing').width()
-    height = 700
+    height = 1200
     p5.size(width, height)
-    p5.background 245
+    p5.background 0
     @beans = []
     window.beans = @beans
   p5.draw = () ->
-    p5.fill(245,245,245,.01)
+    p5.fill(255,255,255,.01)
     p5.noStroke()
     p5.rect(0,0,p5.width, p5.height)
-    xOffset = p5.frameCount * .0005
+    xOffset = +new Date() * .0000005
     yOffset = xOffset + 20
     x = p5.noise(xOffset) * p5.width
     y = p5.noise(yOffset) * p5.height
@@ -71,9 +71,9 @@ class Bean
     @p5.point(@x, @y)
 
   setColor: () ->
-    @p5.colorMode @p5.HSB, 360, 100, 100
+    # @p5.colorMode @p5.HSB, 360, 100, 100
     h = @p5.noise ((@xOffset + @yOffset) / 2) * 360
-    s = 100
+    s = 0
     b = 100
     a = 10
 
